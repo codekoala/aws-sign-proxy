@@ -1,6 +1,10 @@
 package main
 
-import "github.com/kelseyhightower/envconfig"
+import (
+	"os"
+
+	"github.com/kelseyhightower/envconfig"
+)
 
 var config Config
 
@@ -17,5 +21,9 @@ func init() {
 	err := envconfig.Process("AWS_SIGN_PROXY", &config)
 	if err != nil {
 		panic(err)
+	}
+
+	if config.Region == "" {
+		config.Region = os.Getenv("AWS_DEFAULT_REGION")
 	}
 }
