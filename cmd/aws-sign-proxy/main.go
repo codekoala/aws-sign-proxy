@@ -23,7 +23,7 @@ func main() {
 	creds := credentials.NewEnvCredentials()
 	signer := v4.NewSigner(creds)
 
-	http.HandleFunc("/", aws_sign_proxy.SignRequest(config, signer))
+	http.HandleFunc("/", aws_sign_proxy.SignRequest(log, config, signer))
 
 	log.Info("accepting connections", zap.String("addr", config.Bind))
 	if err = http.ListenAndServe(config.Bind, nil); err != nil {

@@ -11,9 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-var log *zap.Logger
-
-func SignRequest(config Config, signer *v4.Signer) http.HandlerFunc {
+func SignRequest(log *zap.Logger, config Config, signer *v4.Signer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			body *bytes.Reader
