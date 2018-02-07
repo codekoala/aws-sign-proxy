@@ -1,4 +1,4 @@
-package main
+package aws_sign_proxy
 
 import (
 	"bytes"
@@ -7,33 +7,13 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/signer/v4"
 	"go.uber.org/zap"
 )
 
 var log *zap.Logger
 
-func main() {
-	var err error
-
-	if log, err = zap.NewProduction(); err != nil {
-		panic(err)
-	}
-
-	log.Info("getting access key ID and secret from environment")
-	creds := credentials.NewEnvCredentials()
-	signer := v4.NewSigner(creds)
-
-	http.HandleFunc("/", signRequest(signer))
-
-	log.Info("accepting connections", zap.String("addr", config.Bind))
-	if err = http.ListenAndServe(config.Bind, nil); err != nil {
-		log.Fatal("error serving requests", zap.Error(err))
-	}
-}
-
-func signRequest(signer *v4.Signer) http.HandlerFunc {
+func SignRequest(config Config, signer *v4.Signer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var (
 			body *bytes.Reader

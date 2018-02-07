@@ -1,4 +1,4 @@
-package main
+package aws_sign_proxy
 
 import (
 	"os"
