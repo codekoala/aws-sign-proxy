@@ -2,19 +2,18 @@ language: go
 sudo: required
 go:
 - 1.9.3
-
 install:
 - curl -Lo mmake https://github.com/codekoala/mmake/releases/download/v1.3.0/mmake_linux_amd64
 - chmod 755 ./mmake
 - go get -u github.com/golang/dep/cmd/dep
-
 script:
 - ./mmake update -I ./include
 - dep ensure
 - TAG=$TRAVIS_COMMIT ./mmake -I ./include all
-
 deploy:
   provider: releases
+  api_key:
+    secure: ZKxdNvFojuvD9abMeVFBU4ahifeNBv05KJGbneNNJTsWtMsl7aX4aKa4Fx1feN+FfZc/riBoIw0vrTohym4eKpWGITpIG2rZ6c4CDc7sNQAR34RnUUdebIOvZRcEbaIIp3y8SK2imdDMYf4CdZyWN42poy55eLejQK6i49FLPNuoMRpg5RQlY/5AGZ9ymyy5Qg+uUuquXDlHsRIK4svKWDyixlljpGj0DS4loMLlGiCZGExcv6LRUGYYuWuIgCVedklSsslm/RnXudzRjI5ecv70c0OC+rD0nltiRNSFG9b1/d5bPXuT7vg1v4ROsJw/oNH/qmGkzTJ1d2CKLlK/DZsUNBzJxsa+Aktn6uSm+cFwlnJBg1j9fgUwqLml02V68l4zQG5cURTvZImD4d7nvQ382VQuVl4G0zuHKl93e+NMn5PxyJ3UiqbxsiKhUQ0ZCBvG14OMNgHGziH3L5oPCDJ/DwUrErOacBB0XZN7thQZ81rvfZK6jnQKBdU80KNPn/X3+n1Nb83jnsICSP2JnRSOPRPIP4C1sNP+HVGXHfclZ8oCoA2KB4/lWIUgoQ05Ie8c4NKSHKfETZhG5+TQWWNP0YJXMlW6eNK8io3F3Nuhf4ziIHxHeExFBnvkURezKmPF9ED7OxlJy9iRMVPQzy87duGrWnHN3NB/GdXYLQo=
   file_glob: true
   file: ./bin/*
   skip_cleanup: true
