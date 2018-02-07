@@ -18,6 +18,10 @@ Configuration is performed via environment variables:
 * ``AWS_SIGN_PROXY_PROVIDER``: provider for the target service.
 * ``AWS_SIGN_PROXY_REGION``: region for the target service. This will default
   to ``AWS_DEFAULT_REGION`` if not explicitly set.
+* ``AWS_SIGN_PROXY_BLOCKHEADERS``: a list of header names that should be
+  removed from the proxied request.
+* ``AWS_SIGN_PROXY_EXTRAHEADERS``: a map of additional headers that should be
+  added to the proxied request.
 
 It is expected that you have ``AWS_ACCESS_KEY_ID`` and
 ``AWS_SECRET_ACCESS_KEY`` for the target service already set in your

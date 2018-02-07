@@ -11,6 +11,7 @@ var config Config
 type Config struct {
 	Bind         string `default:":8080"`
 	ExtraHeaders map[string]string
+	BlockHeaders []string
 	TargetProto  string `default:"https"`
 	TargetHost   string
 	Region       string

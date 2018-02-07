@@ -22,8 +22,9 @@ func main() {
 	log.Info("getting access key ID and secret from environment")
 	creds := credentials.NewEnvCredentials()
 	signer := v4.NewSigner(creds)
+	req_signer := aws_sign_proxy.NewRequestSigner(log, config, signer)
 
-	http.HandleFunc("/", aws_sign_proxy.SignRequest(log, config, signer))
+	http.HandleFunc("/", req_signer.Proxy)
 
 	log.Info("accepting connections", zap.String("addr", config.Bind))
 	if err = http.ListenAndServe(config.Bind, nil); err != nil {
