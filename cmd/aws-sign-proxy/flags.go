@@ -37,9 +37,4 @@ Options:
 		fmt.Println(version.Detailed())
 		os.Exit(0)
 	}
-
-	if len(flag.Args()) == 0 {
-		flag.Usage()
-		os.Exit(1)
-	}
 }
