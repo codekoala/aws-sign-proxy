@@ -33,6 +33,9 @@ func (rs *RequestSigner) Proxy(w http.ResponseWriter, r *http.Request) {
 		err  error
 	)
 
+	totalRequests.Inc()
+	start := time.Now()
+
 	if buf, err := ioutil.ReadAll(r.Body); err == nil {
 		body = bytes.NewReader(buf)
 	}
@@ -86,6 +89,11 @@ func (rs *RequestSigner) Proxy(w http.ResponseWriter, r *http.Request) {
 	if _, err = io.Copy(w, resp.Body); err != nil {
 		rs.log.Warn("failed to copy response body", zap.Error(err))
 	}
+
+	// track request time
+	reqTime := time.Now().Sub(start)
+	requestTime.Observe(reqTime.Seconds())
+	rs.log.Info("request complete", zap.Duration("time", reqTime))
 }
 
 func (rs *RequestSigner) IsBlockedHeader(name string) bool {

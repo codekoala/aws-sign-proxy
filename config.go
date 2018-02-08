@@ -16,6 +16,9 @@ type Config struct {
 	TargetHost   string
 	Region       string
 	Provider     string
+
+	HealthzEndpoint string `default:"/_healthz"`
+	MetricsEndpoint string `default:"/_metrics"`
 }
 
 func init() {

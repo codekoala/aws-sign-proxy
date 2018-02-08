@@ -9,6 +9,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/signer/v4"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.uber.org/zap"
 
 	"github.com/codekoala/aws-sign-proxy"
@@ -30,7 +31,8 @@ func main() {
 	signer := v4.NewSigner(creds)
 	req_signer := aws_sign_proxy.NewRequestSigner(log, config, signer)
 
-	http.HandleFunc("/_healthz", healthz)
+	http.Handle(config.MetricsEndpoint, promhttp.Handler())
+	http.HandleFunc(config.HealthzEndpoint, healthz)
 	http.HandleFunc("/", req_signer.Proxy)
 
 	svr := &http.Server{Addr: config.Bind}
