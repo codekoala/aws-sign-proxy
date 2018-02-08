@@ -22,6 +22,12 @@ Configuration is performed via environment variables:
   removed from the proxied request.
 * ``AWS_SIGN_PROXY_EXTRAHEADERS``: a map of additional headers that should be
   added to the proxied request.
+* ``AWS_SIGN_PROXY_HEALTHZENDPOINT``: relative URL to use for simple health
+  checking. Default is ``/_healthz``. Change this if it somehow collides with
+  the upstream service.
+* ``AWS_SIGN_PROXY_METRICSENDPOINT``: relative URL to use for Prometheus
+  metrics. Default is ``/_metrics``. Change this if it somehow collides with
+  the upstream service.
 
 It is expected that you have ``AWS_ACCESS_KEY_ID`` and
 ``AWS_SECRET_ACCESS_KEY`` for the target service already set in your
