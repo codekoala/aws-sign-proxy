@@ -8,7 +8,7 @@ import (
 var (
 	App       = "aws-sign-proxy"
 	Version   = "v0.1.4"
-	Commit    = "dev"
+	Commit    = ""
 	BuildDate = "unknown"
 )
 
