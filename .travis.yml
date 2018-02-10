@@ -17,9 +17,9 @@ script:
 - TAG=$TRAVIS_COMMIT ./mmake -I ./include all
 
 - export DOCKER_TAG=$(if [ "$TRAVIS_TAG" != "" ]; then echo $TRAVIS_TAG ; elif [ "$TRAVIS_BRANCH" = "master" ]; then echo latest ; else echo $TRAVIS_BRANCH ; fi)
-- make docker-image
+- ./mmake -I ./include docker-image
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-- make docker-push
+- ./mmake -I ./include docker-push
 
 deploy:
   provider: releases
