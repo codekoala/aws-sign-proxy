@@ -4,7 +4,7 @@ services:
 - docker
 
 go:
-- 1.9.3
+- 1.9.4
 
 install:
 - curl -Lo mmake https://github.com/codekoala/mmake/releases/download/v1.3.0/mmake_linux_amd64
