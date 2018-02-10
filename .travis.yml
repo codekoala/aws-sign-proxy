@@ -1,15 +1,23 @@
 language: go
 sudo: required
+
 go:
 - 1.9.3
+
 install:
 - curl -Lo mmake https://github.com/codekoala/mmake/releases/download/v1.3.0/mmake_linux_amd64
 - chmod 755 ./mmake
 - go get -u github.com/golang/dep/cmd/dep
+
 script:
 - ./mmake update -I ./include
 - dep ensure
 - TAG=$TRAVIS_COMMIT ./mmake -I ./include all
+
+- export DOCKER_TAG=$(if [ "$TRAVIS_TAG" != "" ]; then echo $TRAVIS_TAG ; elif [ "$TRAVIS_BRANCH" = "master" ]; then echo latest ; else echo $TRAVIS_BRANCH ; fi)
+- make docker-image
+- make docker-push
+
 deploy:
   provider: releases
   api_key:
