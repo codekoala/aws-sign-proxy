@@ -1,8 +1,8 @@
-FROM debian:8-slim
+FROM alpine:3.7
 MAINTAINER Josh VanderLinden <codekoala@gmail.com>
 
-RUN apt-get update && \
-    apt-get install -y ca-certificates
+RUN apk update && \
+    apk add ca-certificates
 
 ADD ./bin/aws-sign-proxy /bin/
 
